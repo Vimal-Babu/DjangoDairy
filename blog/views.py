@@ -8,9 +8,6 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.generic.edit import FormView
 from .forms import CommentForm
-
-# Create your views here.
-
 class Home(ListView):
     model = BlogPost
     template_name ='blog/home.html'
@@ -44,10 +41,6 @@ class LikePostView(LoginRequiredMixin, View):
 
         if not created:
             like.delete() 
-        #     liked = False
-        # else:
-        #     liked = True
-
         return redirect('post-detail', pk=pk)
 
 

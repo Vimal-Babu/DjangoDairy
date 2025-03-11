@@ -48,6 +48,24 @@
         .create-btn:hover {
             background-color: #218838;
         }
+        .stats {
+            font-size: 14px;
+            color: gray;
+            display: flex;
+            align-items: center;
+        }
+        .stats span {
+            margin-right: 15px;
+        }
+        .like-btn {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+        }
+        .like-btn:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -61,7 +79,6 @@
                     {% csrf_token %}
                     <button type="submit" style="background: none; border: none; color: white; cursor: pointer; text-decoration: underline;">Logout</button>
                 </form>
-                
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'signup' %}">Sign Up</a>
@@ -83,6 +100,17 @@
                     <h4><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h4>
                     <p>By <strong>{{ post.author }}</strong> | {{ post.created_at }}</p>
                     <p>{{ post.content|truncatewords:20 }}</p>
+
+                    <!-- Like and Comment Count -->
+                    <div class="stats">
+                        <form method="POST" action="{% url 'post-like' post.pk %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="like-btn">
+                                👍 {{ post.likes.count }} Likes
+                            </button>
+                        </form>
+                        <span>💬 {{ post.comments.count }} Comments</span>
+                    </div>
                 </div>
             {% endfor %}
         {% else %}
